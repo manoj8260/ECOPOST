@@ -1,0 +1,34 @@
+{%extends 'base.html'%}
+{%load static%}
+
+{%block title%}
+explore
+{%endblock title%}
+
+{%block head%}
+<link rel="stylesheet" href="{%static 'font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.css' %}">
+<link rel="stylesheet" href="/static/CSS/explore.css">
+{%endblock head%}
+
+{%block body%}
+<div class="grid-container">
+    {% for media in media_list %}
+    <div class="media-item">
+        {% if media.photo %}
+            <img src="{{ media.photo.url }}" alt="Photo for {{ media.name }}">
+            <p>{{ media.photo_desc }}</p>
+        {% endif %}
+        {% if media.video %}
+            <video controls>
+                <source src="{{ media.video.url }}" type="video/mp4">
+            </video>
+            <p>{{ media.video_desc }}</p>    
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+
+
+{%endblock body%}
+
+

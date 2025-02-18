@@ -1,0 +1,103 @@
+
+/* 
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    padding: 20px;
+}  */
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #ffff;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 8px;
+   
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    /* background-color: rgb(181, 176, 176); */
+}
+
+.profile-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.profile-name {
+    flex-grow: 1;
+}
+
+.profile-name h2 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+input[type="file"] {
+    padding: 6px 5px;
+    background-color: #0095f6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.change-photo-btn:hover {
+    background-color: #007bb5;
+}
+
+.edit-form label {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.edit-form input, .edit-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.edit-form textarea {
+    resize: vertical;
+}
+
+small {
+    font-size: 12px;
+    color: #888;
+}
+
+.bio-count {
+    font-size: 12px;
+    color: #888;
+    text-align: right;
+    display: block;
+}
+
+.save-btn {
+    background-color: #0095f6;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.save-btn:hover {
+    background-color: #007bb5;
+}
+

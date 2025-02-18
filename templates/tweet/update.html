@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+update
+{% endblock title %}
+{%load static%}
+{%block head%}
+<link rel="stylesheet" href="{%static 'CSS/update.css' %}">
+<link rel="stylesheet" href="/static/font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.css">
+{%endblock head%}
+{% block body %}
+
+
+ <form class="custom-form" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="text" class="custom-label">Text for Tweet : </label>
+    <textarea name="text" id="text" class="custom-textarea">{{ TO.text }}</textarea>
+    <h5>Current photo : </h5> 
+    <img src="{{ TO.photo.url }}" alt="Uploaded photo" class="custom-img">
+
+    <label for="photo" class="custom-label">Upload New Photo : </label>
+    <input type="file" name="photo" id="photo" class="custom-file-input">
+
+    <input type="submit" value="Update Tweet" class="custom-submit-btn">
+</form>
+
+
+
+{% endblock body %}

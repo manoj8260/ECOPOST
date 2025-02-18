@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    {%block title%}
+    
+    {%endblock title%}
+  </title>
+  
+  {%block head%}
+  
+
+  {%endblock head%}
+  <link rel="stylesheet" href="/static/CSS/BASE.CSS">
+  <link rel="icon" type="image/png" href="/static/IMAGES/LOGO-ECOPOST.png">
+
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo">EcoPost</div>
+    <ul class="menu">
+      <li>
+        <span class="menu-icon"><i class="fa fa-home" aria-hidden="true"></i></span>
+        <span class="menu-text"><a href="{%url 'home' %}">Home</a></span>
+      </li>
+      <li>
+        <form action="{%url 'search_user'  %}" method="get">
+          
+        <span class="menu-icon"><i class="fa fa-search" aria-hidden="true"></i></span>
+        <span class="menu-text">
+          <input type="search" placeholder="Search user ..." name="user_username">
+        </form>  
+        </span>
+      </li>
+      <li>
+        <span class="menu-icon"><i class="fa fa-floppy-o" aria-hidden="true"></i></span>
+        <span class="menu-text"><a href="{%url 'saved' %}">Saved Tweet <span class="notification-badge">{{number}}</span></a></span>
+      </li>
+      <li>
+        <span class="menu-icon"><i class="fa fa-compass" aria-hidden="true"></i></span>
+        <span class="menu-text"><a href="{%url 'explore' %}">Explore</a></span>
+      </li>
+      <li>
+        <span class="menu-icon"><i class="fa fa-plus-circle" aria-hidden="true"></i></span>
+        <span class="menu-text"><a href="{%url 'create_tweet' %}">Create Tweet</a></span>
+      </li>
+      <li>
+        <span class="menu-icon"><i class="fa fa-key" aria-hidden="true"></i></span>
+        <span class="menu-text"><a href="{%url 'change_password' %}">Change Password</a></span>
+      </li>
+      <li class="profile">
+        <img src="{{PO.profile_pic.url}}" alt="Profile Picture">
+        <span class="menu-text"><a href="{%url 'user_profile' %}">Profile</a></span>
+      </li>
+      <li>
+        <span class="menu-icon"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+        <span class="menu-text">
+          <form  action="{%url 'user_logout'%}" method="get">
+            <input type="submit" value="Logout" style=" color: rgb(41, 171, 138);">
+          </form>
+        </span>
+      </li>
+    </ul>
+  </div>
+  <div class="content">
+    <div class="rightnav">
+     <ul>
+        <li><a href="{%url 'home' %}">Home</a></li>
+        <li><a href="{%url 'saved' %}">Saved</a></li>
+        <li><a href="{%url 'create_tweet' %}">Tweet</a></li>
+        <li><a href="{%url 'explore' %}">Explore</a></li>
+        <li><a href="{%url 'change_password' %}">change  pw</a></li>
+        <li><a href="{%url 'user_profile' %}">Profile</a></li>
+        <li><a href="{%url 'user_logout' %}">Logout</a></li>
+     </ul>
+  </div>
+    <style>
+   .rightnav{
+    width: 100%;
+    height: 10%;
+    background-color: #111828;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    display: none;
+ }
+ .rightnav>ul{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    font-size: 16px;
+    color: #ffff;
+    text-transform: uppercase;
+ 
+ }
+ 
+ .rightnav>ul>li>a:hover{
+    color: white;
+ }
+ a{
+    text-decoration: none;
+    color: gray;
+ }
+ /* right navigation bar styles ends here  */
+ 
+ @media (max-width: 480px){
+  .rightnav{
+    display: block;
+  }
+ }
+ 
+    </style>
+    <div id="change-bg">
+      <i class="fa fa-moon-o" aria-hidden="true"></i>
+     </div>
+    
+    <div class="dat">
+      <div class="datebox"></div>
+      <div class="timebox"></div>
+   </div>
+  
+   <script>
+    const content=document.querySelector('.content')
+    console.log(content);
+    
+    const datebox=document.querySelector('.datebox')
+const timebox=document.querySelector('.timebox')
+
+setInterval(()=>{
+    const date=new Date()
+    datebox.innerText=`Date:- ${date.toLocaleDateString()}`
+    timebox.innerText=`Time:- ${date.toLocaleTimeString()} `
+},1000)
+
+const change_bg=document.querySelector('#change-bg')
+console.log(change_bg);
+
+let theme=false
+change_bg.addEventListener('click',()=>{
+  theme=!theme
+    if (theme ) {
+      change_bg.classList.remove('light')
+        change_bg.classList.add('dark')
+        change_bg.innerHTML=`<i class="fa fa-lightbulb-o" aria-hidden="true"></i>`
+        document.body.style.backgroundColor = "#021116";
+        document.body.style.color = "white";  // Changes the text color of the body to white
+        change_bg.style.border='1px solid white'
+         
+    }
+    else{
+    
+      change_bg.classList.remove('dark')
+        change_bg.classList.add('light')
+        change_bg.innerHTML=`<i class="fa fa-moon-o" aria-hidden="true"></i>`
+        document.body.style.backgroundColor = "white";
+        document.body.style.color = "black"; 
+        change_bg.style.border='1px solid black'
+       
+          
+    }
+     
+  
+})
+
+   </script>
+   {%block body%}
+
+   {%endblock body%}
+
+   {%block scripts %}
+
+   {%endblock scripts %}
+  </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

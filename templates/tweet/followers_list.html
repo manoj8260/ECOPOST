@@ -1,0 +1,33 @@
+{%extends 'base.html' %}
+
+{%block title%}
+all followers list
+{%endblock title%}
+
+{%block head%}
+<link rel="stylesheet" href="/static/font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="/static/CSS/followers_list.css">
+{%endblock head%}
+
+{%block body%}
+<h2>Followers of {{ user.username }}</h2>
+<ul class="followers_ul">
+    {% for follower in followers %}
+        <li class="followers_li">
+            <div class="user-profile">
+                <img src="https://via.placeholder.com/40" alt="Profile Picture">
+                <div class="user-info">
+                    <h4>{{ follower.follower.username }}</h4>
+                    <p>Full Name (Optional)</p>
+                </div>
+            </div>
+            <button class="follow-back-btn">Follow Back</button>
+        </li>
+    {% empty %}
+        <li class="empty">No followers yet.</li>
+    {% endfor %}
+</ul>
+
+
+{%endblock body%}
+

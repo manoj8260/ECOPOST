@@ -1,0 +1,45 @@
+.body{
+    background-color: red;
+}
+
+.story-title{
+        font-size: 25px;
+        text-align: center;
+        text-decoration: double;
+        text-transform: capitalize;
+        font-weight: 700;
+        color: blueviolet;
+    }
+.story{
+        font-size: 15px;
+        text-align: center;
+        text-decoration:line-through;
+        text-transform: capitalize;
+        font-weight: 700;
+        color:chartreuse;
+
+    }
+.story-container{
+    max-width: 300px; /* Limits the container width */
+    
+    border: 1px solid gray; /* Optional: Add a border for better visibility */
+    overflow: hidden; /* Ensures content doesn't overflow */
+}
+
+.story-video {
+    max-width: 100%; /* Ensures the video doesn't exceed the container's width */
+    max-height: 200px; /* Restricts the height of the video */
+    overflow: hidden; /* Clips any overflowing content */
+    display: flex; /* Flexbox for centering if needed */
+    justify-content: center;
+    align-items: center;
+}
+
+.video-player {
+    max-width: 100%; /* Ensures the video fits within the container */
+    max-height: 200px; /* Ensures the video height stays within the container */
+    display: block; /* Ensures proper rendering */
+    object-fit: cover; /* Crops the video if it exceeds the container */
+}
+
+

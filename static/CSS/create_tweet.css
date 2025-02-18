@@ -1,0 +1,87 @@
+
+    /* Global Styles */
+    body {
+        /* background: linear-gradient(135deg, #6a11cb, #2575fc); */
+        display: flex;
+        align-content: center;
+        min-height: 100vh;
+    }
+
+    /* Form Container */
+    .form-container {
+        background: #ffffff;
+        padding: 20px 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px #6f3ba8;
+        width: 90%;
+        max-width: 600px;
+        position: absolute;
+        top: 20%;
+        left: 10%;
+    }
+
+    .form-container h1 {
+        font-size: 24px;
+        color: #6a11cb;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .form-container form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .form-container form input[type="text"], 
+    .form-container form textarea, 
+    .form-container form input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .form-container form textarea {
+        resize: none;
+        height: 100px;
+    }
+
+    .form-container form input[type="submit"] {
+        background: #6a11cb;
+        color: #ffffff;
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .form-container form input[type="submit"]:hover {
+        background: #2575fc;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 480px) {
+        .form-container {
+            left: 5%;
+        }
+
+        .form-container h1 {
+            font-size: 18px;
+        }
+
+        .form-container form input[type="text"], 
+        .form-container form textarea, 
+        .form-container form input[type="file"], 
+        .form-container form input[type="submit"] {
+            font-size: 12px;
+            padding: 6px;
+        }
+
+        .form-container form textarea {
+            height: 60px;
+        }
+    }

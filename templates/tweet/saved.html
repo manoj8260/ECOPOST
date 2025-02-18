@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}
+saved_tweet
+{% endblock title %}
+
+{% block body %}
+
+{%block head%}
+<link rel="stylesheet" href="/static/CSS/saved.css">
+<link rel="stylesheet" href="/static/font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.css">
+
+{%endblock head%}
+    
+{%if  tweets%}
+{%for tweet in tweets%}
+  <!-- ---------------------- -->
+  <div class="post-container" >
+    <div class="post-header">
+      <a href="{%url 'find_user' tweet.username.username %}"><img src="{{tweet.tweet.profile.profile_pic.url}}" alt="Profile"></a>
+      <div class="user-info">
+        <span>{{tweet.username.username}}</span>   
+        <small>created time : {{tweet.tweet.created_at}} / updated at : {{tweet.tweet.updated_at}} </small>
+      </div>
+     
+      {% if UO.username == tweet.username.username %}
+      <a href="{% url 'update' tweet.pk %}">
+          <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+      </a>           
+      {% endif %} 
+    </div>
+    <div class="post-image">
+      <img src="{{tweet.tweet.photo.url}}" alt="Post">
+    </div>
+    <div class="post-footer" style=" position: relative;">
+      {% if UO.username == tweet.username.username %}
+      <a href="{%url 'deletetweet' tweet.pk %}"><i class="fa fa-trash" aria-hidden="true" style="position: absolute; right: 0;"></i></a>
+      {%endif%}
+      {% if UO.username != tweet.username.username %}
+      <a href="{% url 'save' tweet.tweet.pk %}" style="float: right;">
+        <i class="fa fa-bookmark" aria-hidden="true"></i>
+      </a>
+      {%endif%}
+      <p class="likes"><a href="{% url 'like' tweet.tweet.pk %}">{{tweet.tweet.like}}<i class="fa fa-heart-o" aria-hidden="true"></i></a>likes</p>
+      <p class="description">
+       {{tweet.text}}
+      </p>
+      <div class="comments">
+        <form action="{% url 'savecomment'  tweet.tweet.pk %}" method="POST">
+          {% csrf_token %}
+          <input type="text" name="cmt"  placeholder="Add a comment...." required>
+        <button type="submit" style="border: none;"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+        </form>
+        <a href="{%url 'commentes' tweet.tweet.pk %}" >View all {{tweet.tweet.save_comment}} comments</a>
+      </div>  
+    </div>
+  </div>
+{%endfor%}
+{%else%}
+<p class="story"> No saved tweet available  !</p>
+
+{%endif%}
+
+{% endblock body %}

@@ -1,0 +1,25 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+create_tweet
+{% endblock title %}
+
+{% block body %}
+{%block head%}
+<link rel="stylesheet" href="/static/CSS/create_tweet.css">
+<link rel="stylesheet" href="/static/font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.css">
+{%endblock head%}
+
+
+<div class="form-container">
+    <h1>create_tweet {{UO.username}}</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ETFO.as_p}}
+        <input type="submit" value="Create Tweet">
+    </form>
+</div>
+
+{% endblock body %}
+

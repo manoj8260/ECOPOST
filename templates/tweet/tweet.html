@@ -1,0 +1,98 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+Home
+{% endblock title %}
+
+{% block body %}
+<style>
+  #up h1{
+    font-size: medium;
+  }
+  #up img{
+      height: 150px;
+      width: 150px;
+      border-radius: 100%;
+      margin: auto;
+  }
+  #up{
+    width: 300px;
+    position: fixed;
+    top: 60px;
+    right: 0;
+    z-index: 20;
+  }
+  h3{
+    font-style: italic;
+    color: yellowgreen;
+  }
+  h6{
+    color:wheat;
+  }
+  span{
+    color: rgb(222, 95, 103);
+  }
+  .card-title{
+    font-size: 30px;
+    color: cornflowerblue;
+  }
+</style>
+<center>
+  {%if user.is_authenticated %}
+  <div id="up">
+    <img src="{{PO.profile_pic.url}}" alt="">
+      <h1>{{UO.first_name}}   {{UO.last_name}}</h1>
+      <h1>{{UO.email}}</h1>
+      <h1>{{UO.username}}</h1>
+      <h1>{{PO.pno}}</h1>
+      {%endif%}
+  </div>
+</center>
+{% for tweet in tweets %}
+<center>
+  
+
+
+  <div class="row" >
+    <div class="col-sm-5 mb-3 mb-sm-0">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{tweet.username.username}}</h5>
+          <img src="{{tweet.photo.url}}" class="card-img-top" alt="..." style="width: 300px; height: 200px; margin: 8px;">
+          <p class="card-text">{{tweet.text}}</p>
+          {% if UO.username == tweet.username.username %}
+      <a href="{% url 'update' tweet.pk %}" class="btn btn-primary">Update</a>
+      <a href="{% url 'delete' tweet.pk %}" class="btn btn-danger">Delete</a>
+      {% else %}
+      <a href="{% url 'save' tweet.pk %}" style="float: right;">
+      <i class="fa fa-bookmark-o" aria-hidden="true"></i>
+    </a>
+    <a href="{% url 'like' tweet.pk %}">{{tweet.like}}<i class="fa fa-heart" aria-hidden="true"></i></a>
+      {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+         <h3>All Comments</h3>
+          {% for cmt in tweet.comments.all %}<h6>         
+           {{cmt.comment_text}}<span style="opacity: 0.5;">----- {{cmt.username.username}}</span>
+          </h6> {% endfor %}
+          <form action="{% url 'comment' tweet.pk %}" method="POST">
+            {% csrf_token %}
+            {%if user.is_authenticated %}
+            <input type="text" name="cmt" id="cmt" placeholder="Your Comment....">
+          <button type="submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+          {%endif%}
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+</center>
+{% endfor %}
+
+{% endblock body %}  

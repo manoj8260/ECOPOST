@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+story
+{% endblock title %}
+{%block head%}
+<link rel="stylesheet" href="/static/CSS/story.css">
+<link rel="stylesheet" href="/static/font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.css">
+
+{%endblock head%}
+{% block body %}
+
+
+<h1>Upload a Story</h1>
+<form method="post" enctype="multipart/form-data" class="upload-form">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="{{ form.video.id_for_label }}" class="form-label">{{ form.video.label }}</label>
+        <div class="file-input-wrapper">
+            {{ form.video }}
+        </div>
+    </div>
+    <button type="submit" class="submit-btn">Upload</button>
+</form>
+
+
+{% endblock body %}

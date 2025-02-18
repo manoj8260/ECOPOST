@@ -1,0 +1,172 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block title%}
+home
+{%endblock title%}
+
+{%block head%}
+
+<link rel="stylesheet" href="/static/CSS/home.css">
+<link rel="stylesheet" href="/static/font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.css">
+<style>
+  .comments >a{
+    text-decoration: none;
+
+  }
+  input {
+      border: 1px solid gray;
+      padding: 2px;
+      border-radius: 5px;
+      outline: none; /* Removes the default focus outline */
+    }
+    input:focus {
+      border: 1px solid  #daa520; /* Changes border color on focus */
+      box-shadow: 0 0 5px #d5be84; /* Adds a glow effect */
+    }
+    .description{
+      padding-top: 21px;
+    }
+   
+     
+   .showstory{
+          width: 50%;
+          height: 300px;
+          /* border: 1px solid black; */
+          border: none;
+          border-radius: 5px;
+          background-color: rgb(210, 203, 203,0.5);
+          position: absolute;
+          left: 20%;
+          top: 20%;
+          z-index: 20;
+     } 
+     .showstory i{
+      float: right;
+      /* color: red; */
+     }
+     .showstory video{
+         position: relative;
+         top:40px;
+         left: 15%;
+     }
+
+    .follow-button{
+      padding: 5px;
+      background-color: white;
+      border: 1px solid #0dcaf0;
+      color: #0dcaf0;
+      border-radius: 5px;
+      font-size: 15px;
+      font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      /* transition: background-color ease 2s; */
+      cursor: pointer;
+      float: right;
+    }
+    .follow-button:hover{
+   background-color: #0dcaf0;
+      color: black;
+    }
+
+   
+ 
+</style>
+{%endblock head%}
+
+{%block body%}
+<div class="story-container" >
+  <div class="carousel-container" >
+    <button class="carousel-btn left" id="prevBtn">&#8249;</button>
+    <div class="carousel" id="carousel">
+      {%for profile in all_profile%}
+      <div class="carousel-item">   
+        <a href="{%url 'showstory' profile.pk %}"><img src="{{profile.profile_pic.url}}" alt="1" id="login-user-profile"></a>
+        <p>{{profile.username.username}}</p>
+        {% if UO.username == profile.username.username %}
+        <a href="{%url 'addstory' %}"><i class="fa fa-plus-square-o" aria-hidden="true"></i></a>
+        {% endif %}      
+      </div>
+      {%endfor%}     
+    </div>
+    <button class="carousel-btn right" id="nextBtn">&#8250;</button>
+  </div>
+</div>
+
+{%for tweet in tweets%}
+  <div class="post-container" >
+    <div class="post-header">
+      <a href="{%url 'find_user' tweet.username.username %}"><img src="{{tweet.profile.profile_pic.url}}" alt="Profile"></a>
+      <div class="user-info">
+        <span>{{tweet.username.username}}</span>   
+        <small>created time : {{tweet.created_at}} / updated at : {{tweet.updated_at}} </small>
+      </div>
+     
+      {% if UO.username == tweet.username.username %}
+      <a href="{% url 'update' tweet.pk %}">
+          <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+      </a>           
+      {% endif %} 
+    </div>
+    <div class="post-image">
+      <img src="{{tweet.photo.url}}" alt="Post">
+    </div>
+    <div class="post-footer" style=" position: relative;">
+      {% if UO.username == tweet.username.username %}
+      <a href="{%url 'deletetweet' tweet.pk %}"><i class="fa fa-trash" aria-hidden="true" style="position: absolute; right: 0;"></i></a>
+      {%endif%}
+      {% if UO.username != tweet.username.username %}
+      <a href="{% url 'save' tweet.pk %}" style="float: right;">
+        <i class="fa fa-bookmark-o" aria-hidden="true"></i>
+      </a> 
+      {%endif%}
+      <p class="likes"><a href="{% url 'like' tweet.pk %}">{{tweet.like}}<i class="fa fa-heart-o" aria-hidden="true"></i></a>likes</p>
+     
+      <p class="description">
+       {{tweet.text}}
+      </p>
+      <div class="comments">
+        <form action="{% url 'savecomment' tweet.pk %}" method="POST">
+          {% csrf_token %}
+          <input type="text" name="cmt"  placeholder="Add a comment...." required>
+        <button type="submit" style="border: none;"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+        </form>
+        <a href="{%url 'commentes' tweet.pk %}" >View all {{tweet.save_comment}} comments</a>
+      </div>
+      
+    </div>
+  </div>
+{%endfor%}
+{%block scripts %}
+
+<script src="{%static 'js/home.js' %}"></script>
+
+{%endblock scripts %}
+
+{%endblock body%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

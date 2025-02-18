@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+home
+{% endblock title %}
+{%block head%}
+
+<link rel="stylesheet" href="/static/font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.css">
+{%endblock head%}
+{% block body %}
+    
+    {% for comment in savecomment %}
+          <div class="card text-center" style="background-color: rgb(180, 221, 207); color: black;">
+            <div class="card-header">
+              COMMENT SECTION's
+            </div>
+            <div class="card-body">
+              <h5 class="card-title" style="color: blue;">{{comment.username.username}}</h5>
+              <p class="card-text" style="color: brown;">{{comment.comment_text}}</p>
+              
+            </div>     
+        </div>
+      </div>
+ {%endfor%}
+      
+    
+    
+
+{% endblock body %}

@@ -1,0 +1,85 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+/* Heading */
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Followers List Container */
+.followers_ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Each Follower Row */
+.followers_li{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.followers_li:last-child {
+    border-bottom: none;
+}
+
+/* Profile Picture */
+.user-profile {
+    display: flex;
+    align-items: center;
+}
+
+.user-profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+/* Username and Name */
+.user-info h4 {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.user-info p {
+    margin: 0;
+    font-size: 12px;
+    color: gray;
+}
+
+/* Follow Back Button */
+.follow-back-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.follow-back-btn:hover {
+    background: #0056b3;
+}
+
+/* Empty List Message */
+.empty {
+    text-align: center;
+    padding: 20px;
+    color: #888;
+}

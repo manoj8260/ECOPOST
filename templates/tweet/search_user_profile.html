@@ -1,0 +1,130 @@
+{%extends 'base.html' %}
+
+{%block head%}
+
+<link rel="stylesheet" href="/static/CSS/user_profile.css">
+<link rel="stylesheet" href="/static/font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.css">
+{%endblock head%}
+
+{%block title%}
+search user profile
+{%endblock title%}
+
+{%block body%}
+<div class="user-profile">
+    <div class="profile-container">
+      <section class="section">
+          <div class="profile-image">
+              <img src="{{search_profileobj.profile_pic.url}}" alt="Profile">
+          </div>
+          <div class="profile-username">
+              username : {{search_profileobj.username.username}}
+          </div>
+      </section>
+      <section class="section">
+          <div class="profile-stats">
+              <div><span>{{posts}}</span><small>posts</small></div>
+              <div><span>{{valid_userobj.followers.count}}</span><a href="{% url 'followers_list' valid_userobj.username %}"><small>followers</small></a></div>
+              <div><span>{{valid_userobj.following.count}}</span><a href="{% url 'following_list' valid_userobj.username %}"><small>following</small></a></div>
+          </div>  
+          <div class="profile-actions">
+           {%if UO.username  != valid_userobj.username %} 
+           {% if is_following %}
+        <!-- If already following, show Unfollow button -->
+        <form action="{%url 'unfollow_user' valid_userobj.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="follow-button">Unfollow</button>
+        </form>
+        {% else %}
+        <!-- If not following, show Follow button -->
+        <form action="{%url 'follow_user' valid_userobj.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="follow-button">Follow</button>
+        </form>
+        {% endif %}
+        {%else%}
+        <a href="{%url 'editprofile' %}">
+          <button type="button" class="edit-profile-button">Edit Profile</button>
+         </a>
+        {%endif%}
+          </div>
+      </section>
+    </div>
+    <div class="user-details">
+      <div class="detail">
+        <label for="first-name">First Name:</label>
+        <span id="first-name">{{search_profileobj.username.first_name}}</span>
+      </div>
+      <div class="detail">
+        <label for="last-name">Last Name:</label>
+        <span id="last-name">{{search_profileobj.username.last_name}}</span>
+      </div>
+      <div class="detail">
+        <label for="phone">Phone No:</label>
+        <span id="phone">{{search_profileobj.phno}}</span>
+      </div>
+      <div class="detail">
+        <label for="email">Email:</label>
+        <span id="email">{{search_profileobj.username.email}}</span>
+      </div>
+      <div class="detail">
+        <label for="bio">Bio:</label>
+        <span id="bio">{{search_profileobj.bio}}</span>
+      </div>
+      <div class="detail">
+        <label for="gender">Gender:</label>
+        <span id="gender">{{search_profileobj.gender}}</span>
+      </div>
+      <div class="detail">
+        <label for="gender">Website:</label>
+        <span id="gender"><a href="https://www.linkedin.com/in/manoj-nayak-0222b1229/">{{PO.website}}</a></span>
+      </div>
+    </div>
+    
+  </div>
+  <style>
+    .user-details {
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
+  height: 60%;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.detail {
+  width: 50%;
+  margin-bottom: 15px;
+}
+
+.detail label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.detail span {
+  display: block;
+  color: #333;
+  font-size: 14px;
+}
+
+.user-details .detail:nth-child(odd) {
+  background-color: #e9ecef;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.user-details .detail:nth-child(even) {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+  </style>
+ 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+{%endblock body%}

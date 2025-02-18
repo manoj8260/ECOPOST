@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - EchoPost</title>
+  <link rel="stylesheet" href="/static/CSS/login.css">
+  <link rel="icon" type="image/png" href="/static/IMAGES/LOGO-ECOPOST.png">
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-image">
+      <img src="/static/IMAGES/ecologin.jpg" alt="Login Illustration">
+    </div>
+    <div class="login-form">
+      <h2>Welcome to  EcoPost</h2>
+      <form action="{%url 'user_login' %}" method="post">
+        {%csrf_token%}
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <a href="{%url 'forgot_password' %}" id="fpw">Forgot password</a>
+        <button type="submit">Login</button>
+      </form>
+      <p>Don't have an account? <a href="{%url 'register' %}">Sign up</a></p>
+    </div>
+  </div>
+</body>
+</html>

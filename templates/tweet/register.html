@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - EchoPost</title>
+<link rel="stylesheet" href="/static/CSS/register.css">
+<link rel="icon" type="image/png" href="/static/IMAGES/LOGO-ECOPOST.png">
+   
+</head>
+<body>
+  <div class="register-ecopost">
+    <fieldset>
+      <legend>Register EcoPost</legend>
+      <form class="register-form" method="post" enctype="multipart/form-data">
+      
+        {% csrf_token %}
+       <div class="form">
+        <div class="division">
+          
+          {{ ERFO.as_div }}
+        </div>
+        <div class="division">
+     
+          {{ EPFO.as_div }}
+        </div>
+       </div>
+        <input type="submit" value="Register">
+      </form>
+      <p>Already have an account? <a href="/login">Login</a></p>
+    </fieldset>
+  </div>
+</body>
+</html>

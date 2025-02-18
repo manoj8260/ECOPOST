@@ -1,0 +1,51 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+Comments
+{% endblock title %}
+
+{%block head%}
+<link rel="stylesheet" href="/static/CSS/comments.css">
+<link rel="stylesheet" href="/static/font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.css">
+{%endblock head%}
+
+{% block body %}
+
+<div class="container">
+  <h1>Comments</h1>
+  <hr>
+  {% if comments %}
+    {% for comment in comments %}
+    {% if comment.username.username == UO.username %}
+    <span>
+        <form action="{% url 'deletecomment' comment.pk %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-link" style="border: none;">
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
+            </button>
+        </form>
+    </span>
+{% endif %}
+
+      <div class="comment">
+        <!-- User Avatar -->
+        <div class="avatar">
+          {{ comment.username.username|slice:":1"|upper }}
+        </div>
+
+        <!-- Comment Content -->
+        <div class="comment-content">
+          <div class="username">{{ comment.username.username }}</div>
+          <div class="time">{{ comment.comment_time|date:"F j, Y, g:i a" }}</div>
+          <div class="comment-text">{{ comment.comment_text }}</div>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="no-comments">No comments to display.</div>
+  {% endif %}
+</div>
+  
+
+{% endblock body %}  

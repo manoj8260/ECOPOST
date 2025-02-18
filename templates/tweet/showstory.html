@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}
+show story
+{% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="/static/CSS/showstory.css">
+<link rel="stylesheet" href="/static/font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.css">
+
+{% endblock head %}
+
+{% block body %}
+
+<h3 class="story-title">welcome to story page {{PO.username.username}}</h3>
+{%if  allstory %}
+<div style=" width: 100%;
+ height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+   justify-content: 
+   space-between;
+    align-items: center; 
+    margin-top: 5px;
+    /* background-color: red; */
+    
+    ">
+    {%for story in allstory%}
+    <div class="story-container">
+        <span style="color: blue;">{{story.username.username}}</span> <small>{{story.uploaded_at}}</small>
+        <div class="story-video">
+            <video src="{{ story.video.url }}" controls class="video-player"></video>
+        </div>  
+        {%if UO.username == story.username.username%}     
+        <a href="{%url 'deletestory' story.pk %}"> <i class="fa fa-trash" aria-hidden="true" id="deletestory"  style="float: right;"></i>  </a> 
+        {%endif%}    
+    </div>
+
+{%endfor%}
+</div>
+
+{%else%}
+<p class="story"> No story available  ,upload your story !</p>
+{%endif%}
+
+{% endblock body %}

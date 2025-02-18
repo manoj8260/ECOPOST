@@ -1,0 +1,127 @@
+
+/* General form styling */
+* {
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+body{
+width: 100%;
+height: 100vh;
+
+}
+
+.register-ecopost {
+  padding: 20px;
+  background-color: rgb(245, 194, 107);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  /* max-width: 700px; */
+}
+
+.register-form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.form {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  gap: 4%;
+}
+
+.division {
+  width: 48%;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.register-form input[type="text"],
+.register-form input[type="email"], 
+.register-form input[type="password"],
+.register-form input[type="file"],
+.register-form input[type="textarea"] 
+{
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+.register-form input[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+textarea,select
+{
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+
+.register-form input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+legend {
+  font-size: 1.5em;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+p {
+  text-align: center;
+  margin-top: 10px;
+  color: #555;
+}
+
+p a {
+  color: #4CAF50;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+p a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .form {
+      flex-direction: column;
+      gap: 10px;
+  }
+
+  .division {
+      width: 100%;
+  }
+
+  .register-form {
+      gap: 10px;
+  }
+}
+
