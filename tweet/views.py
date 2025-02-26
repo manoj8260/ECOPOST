@@ -12,43 +12,7 @@ from django.utils.decorators import method_decorator
 import random
 from django.core.mail import send_mail
 import logging
-# Configure a logger for this module
 logger = logging.getLogger(__name__)
-
-
-
-
-def followers_list(request, username):
-    un = request.session.get('username')
-    if not un:
-        return redirect('user_login')  
-    try:
-        UO = User.objects.get(username=un)
-    except User.DoesNotExist:
-        return redirect('user_login')  
-    try:
-        PO = Profile.objects.get(username=UO) 
-    except Profile.DoesNotExist:
-        PO = None  # Handle missing profile scenario
-    user = get_object_or_404(User, username=username)
-    followers = user.followers.all()  # Get users who follow this user
-    return render(request, 'tweet/followers_list.html', {'user': user, 'followers': followers,'PO':PO})
-
-def following_list(request, username):
-    un = request.session.get('username')
-    if not un:
-        return redirect('user_login')  
-    try:
-        UO = User.objects.get(username=un)
-    except User.DoesNotExist:
-        return redirect('user_login')  
-    try:
-        PO = Profile.objects.get(username=UO) 
-    except Profile.DoesNotExist:
-        PO = None  # Handle missing profile scenario
-    user = get_object_or_404(User, username=username)
-    following = user.following.all()  # Get users this user follows
-    return render(request, 'tweet/following_list.html', {'user': user, 'following': following,'PO':PO})
 
 
 
@@ -64,15 +28,13 @@ def home(request):
     try:
         PO = Profile.objects.get(username=UO) 
     except Profile.DoesNotExist:
-        PO = None  # Handle missing profile scenario
+        PO = None  
 
     userprofile = Profile.objects.filter(username=UO)
     other_profiles = Profile.objects.exclude(username=UO)
     all_profiles = list(userprofile) + list(other_profiles)
-    # Get all tweets ordered by creation time
     tweets = Tweet.objects.all().order_by('-created_at')
     allusers=User.objects.all()
-    # Get the number of saved tweets
     countsaved = count_saved(request)
     userstory = Story.objects.all()
     context = {
@@ -126,7 +88,6 @@ def user_login(request):
             un = request.POST.get('username')
             pw = request.POST.get('password')
             if not un or not pw:
-                # return HttpResponse("Both username and password are required.")
                 return render(request,'error.html',{'message': "Both username and password are required."})
             AO = authenticate(username=un, password=pw)
             if AO:
@@ -135,8 +96,7 @@ def user_login(request):
                 return HttpResponseRedirect(reverse('home'))
             else:
                  return render(request,'error.html',{'message': "User not found or invalid credentials."})           
-        except Exception as e:
-            logger.exception("An error occurred during login: %s", e)
+        except Exception : 
             return HttpResponse("An unexpected error occurred. Please try again later.")
     return render(request, 'tweet/user_login.html')
 
@@ -149,27 +109,22 @@ def user_logout(request):
 @login_required
 def user_profile(request):
     if request.method == 'GET':
-        # Retrieve the username stored in the session.
         un = request.session.get('username')
         if not un:
             return render(request,'error.html',{'message': "Username not found in session."})
 
         try:
-            # Retrieve the User object using the username.
             UO = User.objects.get(username=un)
         except User.DoesNotExist:
             return render(request,'error.html',{'message': "User does not exist."})
         try:
-            # Retrieve the Profile associated with the user.
             PO = Profile.objects.get(username=UO)
         except Profile.DoesNotExist:
             return render(request,'error.html',{'message': "Profile does not exist."})
-        # Call custom functions to get the counts and tweets.
         countsaved = count_saved(request) 
         tweets = Tweet.objects.filter(username=UO) 
         posts = count_post(request)
 
-        # Build the context dictionary with correctly quoted keys.
         context = {
             'UO': UO,
             'PO': PO,
@@ -187,13 +142,11 @@ def create_tweet(request):
     if not un:
             return render(request,'error.html',{"message": "Username not found in session."})
     try:
-            # Retrieve the User object using the username.
             UO = User.objects.get(username=un)
     except User.DoesNotExist:
             return render(request,'error.html',{"message": "User does not exist."})
 
     try:
-            # Retrieve the Profile associated with the user.
             PO = Profile.objects.get(username=UO)
     except Profile.DoesNotExist:
             return render(request,'error.html',{"message": "Profile does not exist."})
@@ -368,11 +321,10 @@ def commentes(request,pk):
 class DeleteComment(View):
     def post(self, request, pk):
         comment = get_object_or_404(Comment, pk=pk)
-        # if comment.username.username == request.user:  # Ensure only the owner can delete
         comment.delete()
         tweet=comment.tweet
         if hasattr(tweet, 'save_comment'):
-            tweet.save_comment = max(0, tweet.save_comment - 1)  # Ensure it doesn't go below 0
+            tweet.save_comment = max(0, tweet.save_comment - 1)  
             tweet.save()       
         return redirect(reverse('home'))
 
@@ -424,14 +376,9 @@ def story(request):
 class Showstory(View):
     def get(self, request, pk):
         try:
-            # Fetch Profile using the primary key
             profile = Profile.objects.get(pk=pk)
-            
-            # Get the related User from the Profile
-            user = profile.username  # Assuming Profile has a foreign key to User
-            
-            # Fetch the Story related to the User
-            allstory = Story.objects.filter(username=user)  # Get the latest story, if multiple exist
+            user = profile.username  
+            allstory = Story.objects.filter(username=user) 
             try:
              un=request.session.get('username')
             except Exception:
@@ -441,7 +388,7 @@ class Showstory(View):
 
             PO=Profile.objects.get(username=UO)
             countsaved=count_saved(request) 
-            # Prepare the context
+
             context = {'allstory': allstory,'PO':PO,'number':countsaved,'UO':UO}
             
             return render(request, 'tweet/showstory.html', context)
@@ -605,7 +552,6 @@ class Editprofile(View):
             user = request.user
             profile = Profile.objects.get(username=user)
             
-            # Remove old profile picture if a new one is uploaded
             if 'photo' in request.FILES and profile.profile_pic:
                 if os.path.isfile(profile.profile_pic.path):
                     os.remove(profile.profile_pic.path)
@@ -659,15 +605,12 @@ def follow_user(request, user_id):
         UO=User.objects.get(username=un)
     except User.DoesNotExist:
         return redirect('user_login') 
-    """Follow a user"""
     following = get_object_or_404(User, id=user_id)
     print(following.id)
     print(UO.id)
-    # Prevent self-following
     if UO == following:
         return HttpResponse("You cannot follow yourself.", status=400)
 
-    # Create a follow relationship if it doesn't exist
     follow, created = Follow.objects.get_or_create(follower=UO, following=following)
 
     if created:
@@ -686,7 +629,6 @@ def unfollow_user(request, user_id):
         UO=User.objects.get(username=un)
     except User.DoesNotExist:
         return redirect('user_login')
-    """Unfollow a user"""
     following = get_object_or_404(User, id=user_id)
     follow = Follow.objects.filter(follower=UO, following=following)
 
@@ -768,3 +710,37 @@ def count_searchobj_post(request,username):
     for post in tweetposts:
         numberofpost+=1
     return numberofpost 
+
+def followers_list(request, username):
+    un = request.session.get('username')
+    if not un:
+        return redirect('user_login')  
+    try:
+        UO = User.objects.get(username=un)
+    except User.DoesNotExist:
+        return redirect('user_login')  
+    try:
+        PO = Profile.objects.get(username=UO) 
+    except Profile.DoesNotExist:
+        PO = None  
+    user = get_object_or_404(User, username=username)
+    followers = user.followers.all()  
+    return render(request, 'tweet/followers_list.html', {'user': user, 'followers': followers,'PO':PO})
+
+def following_list(request, username):
+    un = request.session.get('username')
+    if not un:
+        return redirect('user_login')  
+    try:
+        UO = User.objects.get(username=un)
+    except User.DoesNotExist:
+        return redirect('user_login')  
+    try:
+        PO = Profile.objects.get(username=UO) 
+    except Profile.DoesNotExist:
+        PO = None  
+    user = get_object_or_404(User, username=username)
+    following = user.following.all() 
+    return render(request, 'tweet/following_list.html', {'user': user, 'following': following,'PO':PO})
+
+
