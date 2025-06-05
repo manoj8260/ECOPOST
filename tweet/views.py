@@ -11,8 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 import random
 from django.core.mail import send_mail
-import logging
-logger = logging.getLogger(__name__)
+
 
 
 
